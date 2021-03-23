@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <title>iphone compare</title>
+      <!-- <link rel="stylesheet" href="/styles.css"> -->
+      <!-- 引入 echarts.js -->
+      <!-- <script type="text/javascript" src="calculator.js"></script> -->
+      <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+  </head>
+  <style>
+    body {
+      background-color: #EEFFBB;
+      }
+ </style>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main4" style="width: 600px;height:200px;margin:0 auto;"></div>
+    <div id="main3" style="width: 400px;height:200px;margin:0 auto;"></div>
+    <div id="main2" style="width: 400px;height:200px;margin:0 auto;"></div>
+    <div id="main" style="width: 400px;height:200px;margin:0 auto;"></div>
+
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main'));
+        var myChart2 = echarts.init(document.getElementById('main2'));
+        var myChart3 = echarts.init(document.getElementById('main3'));
+        var myChart4 = echarts.init(document.getElementById('main4'));
+        var inputPhone1 = <%= name1 %>;
+        var inputPhone1 = inputPhone1.toString();
+        var inputPhone2 = <%= name2 %>;
+        var inputPhone2 = inputPhone2.toString();
+
+        var data1 = [0,0,0,0,0,0];
+        var data2 = [0,0,0,0,0,0];
+      //               weight,CPU,memory,screensize
+
+        var datatset = [
+                        ["3",133,660,256,3.5,1220],
+                       ["4",137,800,528,3.5,1420],
+                       ["5",112,1300,1280,4,1440],
+                      ["6",129,1400,1280,4.7,1810],
+                      ["7",138,2300,2560,3.5,1960],
+                     ["8",148,2400,2560,4.7,1821],
+                     ["10",174,2400,3840,5.8,2716],
+                    ["11",194,2660,5120,6.1,3110],
+                    ["12",162,2660,5120,6.1,2775]
+                       ]
+        //
+        for(i=0;i<datatset.length;i++){
+          if (inputPhone1 ===datatset[i][0]){
+             data1 = datatset[i]
+          }
+          if (inputPhone2 === datatset[i][0]){
+             data2 = datatset[i]
+          }
+        }
+
+        var option = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                // 提供一份数据。
+                source: [
+                    ['product', 'iPhone'.concat(inputPhone1), 'iPhone'.concat(inputPhone2)],
+                    ['Weight(g)', data1[1], data2[1]]
+
+                    // ['Screensize(inch)', data1[4], data2[4]]
+                ]
+            },
+            // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+            xAxis: {type: 'category'},
+            // 声明一个 Y 轴，数值轴。
+            yAxis: {},
+            // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+            series: [
+                {type: 'bar'},
+                {type: 'bar'}
+                // {type: 'bar'}
+            ]
+        };
+        var option2 = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                // 提供一份数据。
+                source: [
+                    ['product', 'iPhone'.concat(inputPhone1), 'iPhone'.concat(inputPhone2)],
+                    // ['Weight(g)', data1[1], data2[1]],
+                    // ['CPU(MHz)', data1[2], data2[2]],
+                    // ['Memory(MB)', data1[3], data2[3]],
+                    ['Screensize(inch)', data1[4], data2[4]]
+                ]
+            },
+            // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+            xAxis: {type: 'category'},
+            // 声明一个 Y 轴，数值轴。
+            yAxis: {},
+            // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+            series: [
+                {type: 'bar'},
+                {type: 'bar'}
+                // {type: 'bar'}
+            ]
+        };
+        var option3 = {
+            legend: {},
+            tooltip: {},
+            dataset: {
+                // 提供一份数据。
+                source: [
+                    ['product', 'iPhone'.concat(inputPhone1), 'iPhone'.concat(inputPhone2)],
+                    // ['Weight(g)', data1[1], data2[1]],
+                    ['CPU(MHz)', data1[2], data2[2]],
+                    ['RAM(MB)', data1[3], data2[3]],
+                    ['Battery(mAh)', data1[5], data2[5]]
+                ]
+            },
+            // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+            xAxis: {type: 'category'},
+            // 声明一个 Y 轴，数值轴。
+            yAxis: {},
+            // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+            series: [
+                {type: 'bar'},
+                {type: 'bar'}
+                // {type: 'bar'}
+            ]
+        };
+        var option4 = {
+        series : [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: '55%',
+                roseType: 'angle',
+                data:[
+                    {value:Math.abs(data1[2]-data2[2])/(data1[2]+data2[2]), name:'CPU(MHz) Improvement'},
+                    {value:Math.abs(data1[3]-data2[3])/(data1[3]+data2[3]), name:'RAM(MB) Improvement'},
+                    {value:Math.abs(data1[5]-data2[5])/(data1[5]+data2[5]), name:'Battery(mAh) Improvement'},
+                    {value:Math.abs(data1[4]-data2[4])/(data1[4]+data2[4]), name:'Screensize(inch) Improvement'},
+                    {value:Math.abs(data1[1]-data2[1])/(data1[1]+data2[1]), name:'Weight(g) Improvement'}
+                ]
+            }
+        ]
+    };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        myChart2.setOption(option2);
+        myChart3.setOption(option3);
+        myChart4.setOption(option4);
+    </script>
+    <h4 style="text-align:center;color: #888888">Tianyu & Huyue </h1>
+    <h5 style="text-align:center;color: #AAAAAA">Copy right 2021 MM 802 </h1>
+</body>
+</html>
